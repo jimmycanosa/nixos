@@ -113,6 +113,8 @@
   nixfmt-classic
   nixd
   keyd
+  libreoffice-qt6-fresh
+  onlyoffice-desktopeditors
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
