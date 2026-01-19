@@ -44,6 +44,20 @@
           main = {
             capslock = "overloadt2(control, esc, 150)";
             rightshift = "capslock";
+            f1 = "enter";
+          };
+          "control" = {
+            # Navigation
+            p = "up";
+            n = "down";
+            b = "left";
+            f = "right";
+            a = "home";
+            e = "end";
+            g = "esc";
+            # Deletion
+            d = "delete";
+            h = "backspace";
           };
         };
       };
