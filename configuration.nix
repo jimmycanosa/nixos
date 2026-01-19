@@ -116,5 +116,10 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "25.11"; # Did you read the comment?
+  fileSystems."/storage" = {
+    device = "/dev/disk/by-uuid/db35974e-0ff9-4fd3-a568-ea1691713e7b";
+    fsType = "ext4";
+    options = [ "defaults" "user" "nofail" ];
+  };
 
 }
