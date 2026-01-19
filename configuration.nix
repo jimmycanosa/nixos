@@ -122,4 +122,14 @@
     options = [ "defaults" "user" "nofail" ];
   };
 
+  # Perform garbage collection weekly to keep disk usage low
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 30d";
+  };
+
+  # Optimize storage by hard-linking identical files in the store
+  nix.settings.auto-optimise-store = true;
+
 }
