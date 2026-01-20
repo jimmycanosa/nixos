@@ -68,6 +68,15 @@
   services.displayManager.sddm.enable = true;
   services.desktopManager.plasma6.enable = true;
 
+  # Enable Hyprland
+  programs.hyprland.enable = true;
+
+  # Essential for apps to work correctly in a tiling environment
+  xdg.portal = {
+    enable = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  };
+
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
@@ -118,17 +127,23 @@
   environment.systemPackages = with pkgs; [
   #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
   #  wget
-  git
-  vscode
-  emacs
-  vim
-  google-chrome
-  gparted
-  nixfmt-classic
-  nixd
-  keyd
-  libreoffice-qt6-fresh
-  onlyoffice-desktopeditors
+    git
+    vscode
+    emacs
+    vim
+    google-chrome
+    gparted
+    nixfmt-classic
+    nixd
+    keyd
+    libreoffice-qt6-fresh
+    onlyoffice-desktopeditors
+    # The new Hyprland packages
+    kitty        # Default terminal for Hyprland
+    waybar       # The status bar at the top
+    mako         # Notification daemon
+    swww         # For wallpapers
+    wofi         # App launcher
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
