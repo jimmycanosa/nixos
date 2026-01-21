@@ -128,8 +128,8 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
   #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  #  wget
     git
+    wget
     vscode
     emacs
     vim
@@ -138,8 +138,8 @@
     nixfmt-classic
     nixd
     keyd
-    libreoffice-qt6-fresh
     onlyoffice-desktopeditors
+    zathura
     # The new Hyprland packages
     kitty        # Default terminal for Hyprland
     waybar       # The status bar at the top
