@@ -26,6 +26,23 @@
   # Enable networking
   networking.networkmanager.enable = true;
 
+  # --- HARDWARE & DRIVERS ---
+  # CPU Microcode updates for Intel processors
+  hardware.cpu.intel.updateMicrocode = true;
+  
+  # Enable all firmware (helps with Wi-Fi/Bluetooth)
+  hardware.enableAllFirmware = true;
+
+  # Enable Bluetooth support
+  hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = true;
+
+  # Graphics acceleration (important for Haruna and Plasma 6)
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
+
   # Set your time zone.
   time.timeZone = "Asia/Hong_Kong";
 
