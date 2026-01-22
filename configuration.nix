@@ -140,6 +140,9 @@
     keyd
     onlyoffice-desktopeditors
     zathura
+    haruna
+    ffmpeg
+    yt-dlp
     # The new Hyprland packages
     kitty        # Default terminal for Hyprland
     waybar       # The status bar at the top
