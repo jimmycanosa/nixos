@@ -5,10 +5,9 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [ # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -29,7 +28,7 @@
   # --- HARDWARE & DRIVERS ---
   # CPU Microcode updates for Intel processors
   hardware.cpu.intel.updateMicrocode = true;
-  
+
   # Enable all firmware (helps with Wi-Fi/Bluetooth)
   hardware.enableAllFirmware = true;
 
@@ -124,15 +123,28 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
+  # --- The Permission Rules --- (Allow jimmyc to control the service) 
+  security.sudo.extraRules = [
+    {
+      users = [ "jimmyc" ];
+      commands = [
+        { command = "/run/current-system/sw/bin/systemctl start keyd"; options = [ "NOPASSWD" ]; }
+        { command = "/run/current-system/sw/bin/systemctl stop keyd"; options = [ "NOPASSWD" ]; }
+        { command = "/run/current-system/sw/bin/systemctl is-active keyd"; options = [ "NOPASSWD" ]; }
+      ];
+    }
+  ];
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.jimmyc = {
     isNormalUser = true;
     description = "Jimmy C";
     extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [
-      kdePackages.kate
-    #  thunderbird
-    ];
+    packages = with pkgs;
+      [
+        kdePackages.kate
+        #  thunderbird
+      ];
   };
 
   # Install firefox.
@@ -144,7 +156,18 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-  #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    # --- The Toggle Script ---
+    (writeShellScriptBin "keyd-toggle" ''
+      if systemctl is-active --quiet keyd; then
+        sudo systemctl stop keyd
+        ${pkgs.libnotify}/bin/notify-send "keyd" "Key remapping OFF" -i input-keyboard
+      else
+        sudo systemctl start keyd
+        ${pkgs.libnotify}/bin/notify-send "keyd" "Key remapping ON" -i input-keyboard
+      fi
+    '')
+    
+    #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     git
     wget
     vscode
@@ -161,11 +184,11 @@
     ffmpeg
     yt-dlp
     # The new Hyprland packages
-    kitty        # Default terminal for Hyprland
-    waybar       # The status bar at the top
-    mako         # Notification daemon
-    swww         # For wallpapers
-    wofi         # App launcher
+    kitty # Default terminal for Hyprland
+    waybar # The status bar at the top
+    mako # Notification daemon
+    swww # For wallpapers
+    wofi # App launcher
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
