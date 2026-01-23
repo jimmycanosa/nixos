@@ -148,7 +148,30 @@
   };
 
   # Install firefox.
-  programs.firefox.enable = true;
+  programs.firefox = {
+    enable = true;
+    preferences = {
+      "widget.wayland.enabled" = true;
+      "media.ffmpeg.vaapi.enabled" = true; # Enables Hardware Acceleration
+      "gfx.webrender.all" = true;          # Forces GPU rendering
+    };
+  };
+
+  programs.chromium = {
+    enable = true;
+    extraOpts = {
+      "CommandLineArgs" = [
+        "--enable-features=VaapiVideoDecoder"
+        "--ignore-gpu-blocklist"
+        "--enable-gpu-rasterization"
+        "--enable-zero-copy"
+      ];
+    };
+  };
+
+  # Ensure you have the environment variable set globally
+  environment.sessionVariables.MOZ_ENABLE_WAYLAND = "1";
+  environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
